@@ -23,9 +23,11 @@ router.get("/:id", (req, res) => {
 // create new transaction
 
 router.post('/', (req, res) => {
+    //create a new transaction objedt and increment {id} and data
     const currentTransaction = {id:transactionArr.length + 1, ...req.body }
+    //add the new transaction object to the transaction arr
     transactionArr.push(currentTransaction)
-    
+    //sent a response with a http code 201 and the newly added transaction
     res.status(201).send(transactionArr[transactionArr.length-1])
 })
 
@@ -50,10 +52,13 @@ router.delete("/:id", (req, res) => {
 //Update Transaction by ID
 
 router.put("/:id", (req, res) => {
+    // get the id param from the request url
     const {id} = req.params;
+    //find the index of the transactionArr based on .id
     const transactionToUpdateIndex = transactionArr.findIndex(el => el.id === +id)
-
+    //check if the transaction exists
     if (transactionToUpdateIndex !== -1) {
+        //update the transaction object in transactionArr with data from req.body
         transactionArr[transactionToUpdateIndex] = req.body
         res.status(200).json(transactionArr[transactionToUpdateIndex])
     } else {
